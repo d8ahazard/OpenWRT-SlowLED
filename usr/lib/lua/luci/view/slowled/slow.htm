@@ -1,0 +1,751 @@
+<%+header%>
+<h1 style="text-align:center; margin-bottom:1rem;">SlowLED Configurator</h1>
+<div style="max-width:800px; margin:0 auto;">
+    <div style="display: flex; flex-wrap: wrap; align-items: center;">
+        <div style="margin: 2px 1rem; flex: 1 1 25rem;">
+            <form id="profileForm" style="display: flex; align-items: center;">
+                <label for="profileSelect" style="margin-right: 0.5rem;">Active profile</label>
+                <select id="profileSelect" style="flex: 1;">
+                    <option value="1">Config 1</option>
+                    <option value="2">Config 2</option>
+                    <option value="3">Config 3</option>
+                </select>
+                <div style="margin-left: 0.5rem;">
+                    <button type="submit"
+                            style="display:block; padding:0.5rem 1rem; background-color:#0d6efd; color:#fff; border:none; border-radius:0.25rem;">
+                        Save Config 1
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+<ul class="tabmenu tabs" id="ledTabs" style="display:flex; flex-wrap: wrap">
+    <li class="tab active" data-tgt="led_1">
+        <a href="#">Config 1</a>
+    </li>
+    <li class="tab" data-tgt="led_2">
+        <a href="#">Config 2</a>
+    </li>
+    <li class="tab" data-tgt="led_3">
+        <a href="#">Config 3</a>
+    </li>
+</ul>
+<div class="some_section">
+    <div id="led_1" class="slowLedSection activeSection">
+        <h2>Config 1</h2>
+        <form id="configForm1">
+            <h3 style="text-align:center;">Red</h3>
+            <div style="flex-wrap:wrap; text-align: center;">
+                <div style="display:flex; flex-direction: row;flex-wrap:wrap;">
+                    <div style="margin: 2px 1rem; flex: auto; max-width:25rem;">
+                        <label style="display:block; margin-bottom:1rem;" for="redFadeInDelay1">Fade In
+                            Delay:</label>
+                        <input style="width:100%;" type="range" class="form-range ledRange" id="redFadeInDelay1"
+                               name="redFadeInDelay1" min="0" max="30000" step="10" value="5000">
+                        <div style="text-align:center;">
+                            <span id="redFadeInDelay1Value">5000</span> ms
+                        </div>
+                    </div>
+                    <div style="margin: 2px 1rem; flex: auto; max-width:25rem;">
+                        <label style="display:block; margin-bottom:1rem;" for="redFadeInTime1">Fade In Time:</label>
+                        <input style="width:100%;" type="range" class="form-range ledRange" id="redFadeInTime1"
+                               name="redFadeInTime1" min="0" max="30000" step="10" value="5000">
+                        <div style="text-align:center;">
+                            <span id="redFadeInTimeValue">5000</span> ms
+                        </div>
+                    </div>
+                    <div style="margin: 2px 1rem; flex: auto; max-width:25rem;">
+                        <label style="display:block; margin-bottom:1rem;" for="redFadeHoldTime1">Hold Time:</label>
+                        <input style="width:100%;" type="range" class="form-range ledRange" id="redFadeHoldTime1"
+                               name="redFadeHoldTime1" min="0" max="30000" step="10" value="5000">
+                        <div style="text-align:center;">
+                            <span id="redFadeHoldTimeValue">5000</span> ms
+                        </div>
+                    </div>
+                    <div style="margin: 2px 1rem; flex: auto; max-width:25rem;">
+                        <label style="display:block; margin-bottom:1rem;" for="redFadeOutTime1">Fade Out
+                            Time:</label>
+                        <input style="width:100%;" type="range" class="form-range ledRange" id="redFadeOutTime1"
+                               name="redFadeOutTime1" min="0" max="30000" step="10" value="5000">
+                        <div style="text-align:center;">
+                            <span id="redFadeOutTime1Value">5000</span> ms
+                        </div>
+                    </div>
+                    <div style="margin: 2px 1rem; flex: auto;">
+                        <label style="display:block; margin-bottom:1rem;" for="redMaxBrightness1">Max
+                            Brightness:</label>
+                        <input style="width:100%;" type="range" class="form-range ledRange" id="redMaxBrightness1"
+                               name="redMaxBrightness1" min="0" max="255" value="128">
+                        <div style="text-align:center;">
+                            <span id="redMaxBrightness1Value">128</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <h3 style="text-align:center;">Green</h3>
+            <div style="flex-wrap:wrap; text-align: center;">
+                <div style="display:flex; flex-direction: row;flex-wrap:wrap;">
+                    <div style="margin: 2px 1rem; flex: auto; max-width:25rem;">
+                        <label style="display:block; margin-bottom:1rem;" for="greenFadeInDelay1">Fade In
+                            Delay:</label>
+                        <input style="width:100%;" type="range" class="form-range ledRange" id="greenFadeInDelay1"
+                               name="greenFadeInDelay1" min="0" max="30000" step="10" value="5000">
+                        <div style="text-align:center;">
+                            <span id="greenFadeInDelay1Value">5000</span> ms
+                        </div>
+                    </div>
+                    <div style="margin: 2px 1rem; flex: auto; max-width:25rem;">
+                        <label style="display:block; margin-bottom:1rem;" for="greenFadeInTime1">Fade In
+                            Time:</label>
+                        <input style="width:100%;" type="range" class="form-range ledRange" id="greenFadeInTime1"
+                               name="greenFadeInTime1" min="0" max="30000" step="10" value="5000">
+                        <div style="text-align:center;">
+                            <span id="greenFadeInTime1Value">5000</span> ms
+                        </div>
+                    </div>
+                    <div style="margin: 2px 1rem; flex: auto; max-width:25rem;">
+                        <label style="display:block; margin-bottom:1rem;" for="greenFadeHoldTime1">Hold
+                            Time:</label>
+                        <input style="width:100%;" type="range" class="form-range ledRange"
+                               id="greenFadeHoldTime1"
+                               name="greenFadeHoldTime1" min="0" max="30000" step="10" value="5000">
+                        <div style="text-align:center;">
+                            <span id="greenFadeHoldTime1Value">5000</span> ms
+                        </div>
+                    </div>
+                    <div style="margin: 2px 1rem; flex: auto; max-width:25rem;">
+                        <label style="display:block; margin-bottom:1rem;" for="greenFadeOutTime1">Fade Out
+                            Time:</label>
+                        <input style="width:100%;" type="range" class="form-range ledRange" id="greenFadeOutTime1"
+                               name="greenFadeOutTime1" min="0" max="30000" step="10" value="5000">
+                        <div style="text-align:center;">
+                            <span id="greenFadeOutTime1Value">5000</span> ms
+                        </div>
+                    </div>
+                    <div style="margin: 2px 1rem; flex: auto;">
+                        <label style="display:block; margin-bottom:1rem;" for="greenMaxBrightness1">Max
+                            Brightness:</label>
+                        <input style="width:100%;" type="range" class="form-range ledRange"
+                               id="greenMaxBrightness1"
+                               name="greenMaxBrightness1" min="0" max="255" value="128">
+                        <div style="text-align:center;">
+                            <span id="greenMaxBrightness1Value">128</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <h3 style="text-align:center;">Blue</h3>
+            <div style="flex-wrap:wrap; text-align: center;">
+                <div style="display:flex; flex-direction: row;flex-wrap:wrap;">
+                    <div style="margin: 2px 1rem; flex: auto; max-width:25rem;">
+                        <label style="display:block; margin-bottom:1rem;" for="blueFadeInDelay1">Fade In
+                            Delay:</label>
+                        <input style="width:100%;" type="range" class="form-range ledRange" id="blueFadeInDelay1"
+                               name="blueFadeInDelay1" min="0" max="30000" step="10" value="5000">
+                        <div style="text-align:center;">
+                            <span id="blueFadeInDelay1Value">5000</span> ms
+                        </div>
+                    </div>
+                    <div style="margin: 2px 1rem; flex: auto; max-width:25rem;">
+                        <label style="display:block; margin-bottom:1rem;" for="blueFadeInTime1">Fade In
+                            Time:</label>
+                        <input style="width:100%;" type="range" class="form-range ledRange" id="blueFadeInTime1"
+                               name="blueFadeInTime1" min="0" max="30000" step="10" value="5000">
+                        <div style="text-align:center;">
+                            <span id="blueFadeInTime1Value">5000</span> ms
+                        </div>
+                    </div>
+                    <div style="margin: 2px 1rem; flex: auto; max-width:25rem;">
+                        <label style="display:block; margin-bottom:1rem;" for="blueFadeHoldTime1">Hold Time:</label>
+                        <input style="width:100%;" type="range" class="form-range ledRange" id="blueFadeHoldTime1"
+                               name="blueFadeHoldTime1" min="0" max="30000" step="10" value="5000">
+                        <div style="text-align:center;">
+                            <span id="blueFadeHoldTime1Value">5000</span> ms
+                        </div>
+                    </div>
+                    <div style="margin: 2px 1rem; flex: auto; max-width:25rem;">
+                        <label style="display:block; margin-bottom:1rem;" for="blueFadeOutTime1">Fade Out
+                            Time:</label>
+                        <input style="width:100%;" type="range" class="form-range ledRange" id="blueFadeOutTime1"
+                               name="blueFadeOutTime1" min="0" max="30000" step="10" value="5000">
+                        <div style="text-align:center;">
+                            <span id="blueFadeOutTime1Value">5000</span> ms
+                        </div>
+                    </div>
+                    <div style="margin: 2px 1rem; flex: auto;">
+                        <label style="display:block; margin-bottom:1rem;" for="blueMaxBrightness1">Max
+                            Brightness:</label>
+                        <input style="width:100%;" type="range" class="form-range ledRange"
+                               id="blueMaxBrightness1"
+                               name="blueMaxBrightness1" min="0" max="255" value="128">
+                        <div style="text-align:center;">
+                            <span id="blueMaxBrightness1Value">128</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="flex:1;">
+                <button type="submit"
+                        style="display:block; width:100%; padding:0.5rem 1rem; background-color:#0d6efd; color:#fff; border:none; border-radius:0.25rem; margin-top:15px;">
+                    Save Config 1
+                </button>
+            </div>
+        </form>
+    </div>
+    <div id="led_2" class="slowLedSection">
+        <h2>Config 2</h2>
+        <form id="configForm2">
+            <h3 style="text-align:center;">Red</h3>
+            <div style="flex-wrap:wrap; text-align: center;">
+                <div style="display:flex; flex-direction: row;flex-wrap:wrap;">
+                    <div style="margin: 2px 1rem; flex: auto; max-width:25rem;">
+                        <label style="display:block; margin-bottom:1rem;" for="redFadeInDelay2">Fade In
+                            Delay:</label>
+                        <input style="width:100%;" type="range" class="form-range ledRange" id="redFadeInDelay2"
+                               name="redFadeInDelay2" min="0" max="30000" step="10" value="5000">
+                        <div style="text-align:center;">
+                            <span id="redFadeInDelay2Value">5000</span> ms
+                        </div>
+                    </div>
+                    <div style="margin: 2px 1rem; flex: auto; max-width:25rem;">
+                        <label style="display:block; margin-bottom:1rem;" for="redFadeInTime2">Fade In Time:</label>
+                        <input style="width:100%;" type="range" class="form-range ledRange" id="redFadeInTime2"
+                               name="redFadeInTime2" min="0" max="30000" step="10" value="5000">
+                        <div style="text-align:center;">
+                            <span id="redFadeInTime2Value">5000</span> ms
+                        </div>
+                    </div>
+                    <div style="margin: 2px 1rem; flex: auto; max-width:25rem;">
+                        <label style="display:block; margin-bottom:1rem;" for="redFadeHoldTime2">Hold Time:</label>
+                        <input style="width:100%;" type="range" class="form-range ledRange" id="redFadeHoldTime2"
+                               name="redFadeHoldTime2" min="0" max="30000" step="10" value="5000">
+                        <div style="text-align:center;">
+                            <span id="redFadeHoldTime2Value">5000</span> ms
+                        </div>
+                    </div>
+                    <div style="margin: 2px 1rem; flex: auto; max-width:25rem;">
+                        <label style="display:block; margin-bottom:1rem;" for="redFadeOutTime2">Fade Out
+                            Time:</label>
+                        <input style="width:100%;" type="range" class="form-range ledRange" id="redFadeOutTime2"
+                               name="redFadeOutTime2" min="0" max="30000" step="10" value="5000">
+                        <div style="text-align:center;">
+                            <span id="redFadeOutTime2Value">5000</span> ms
+                        </div>
+                    </div>
+                    <div style="margin: 2px 1rem; flex: auto;">
+                        <label style="display:block; margin-bottom:1rem;" for="redMaxBrightness2">Max
+                            Brightness:</label>
+                        <input style="width:100%;" type="range" class="form-range ledRange" id="redMaxBrightness2"
+                               name="redMaxBrightness2" min="0" max="255" value="128">
+                        <div style="text-align:center;">
+                            <span id="redMaxBrightness2Value">128</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <h3 style="text-align:center;">Green</h3>
+            <div style="flex-wrap:wrap; text-align: center;">
+                <div style="display:flex; flex-direction: row;flex-wrap:wrap;">
+                    <div style="margin: 2px 1rem; flex: auto; max-width:25rem;">
+                        <label style="display:block; margin-bottom:1rem;" for="greenFadeInDelay2">Fade In
+                            Delay:</label>
+                        <input style="width:100%;" type="range" class="form-range ledRange" id="greenFadeInDelay2"
+                               name="greenFadeInDelay2" min="0" max="30000" step="10" value="5000">
+                        <div style="text-align:center;">
+                            <span id="greenFadeInDelay2Value">5000</span> ms
+                        </div>
+                    </div>
+                    <div style="margin: 2px 1rem; flex: auto; max-width:25rem;">
+                        <label style="display:block; margin-bottom:1rem;" for="greenFadeInTime2">Fade In
+                            Time:</label>
+                        <input style="width:100%;" type="range" class="form-range ledRange" id="greenFadeInTime2"
+                               name="greenFadeInTime2" min="0" max="30000" step="10" value="5000">
+                        <div style="text-align:center;">
+                            <span id="greenFadeInTime2Value">5000</span> ms
+                        </div>
+                    </div>
+                    <div style="margin: 2px 1rem; flex: auto; max-width:25rem;">
+                        <label style="display:block; margin-bottom:1rem;" for="greenFadeHoldTime2">Hold
+                            Time:</label>
+                        <input style="width:100%;" type="range" class="form-range ledRange"
+                               id="greenFadeHoldTime2"
+                               name="greenFadeHoldTime2" min="0" max="30000" step="10" value="5000">
+                        <div style="text-align:center;">
+                            <span id="greenFadeHoldTime2Value">5000</span> ms
+                        </div>
+                    </div>
+                    <div style="margin: 2px 1rem; flex: auto; max-width:25rem;">
+                        <label style="display:block; margin-bottom:1rem;" for="greenFadeOutTime2">Fade Out
+                            Time:</label>
+                        <input style="width:100%;" type="range" class="form-range ledRange" id="greenFadeOutTime2"
+                               name="greenFadeOutTime2" min="0" max="30000" step="10" value="5000">
+                        <div style="text-align:center;">
+                            <span id="greenFadeOutTime2Value">5000</span> ms
+                        </div>
+                    </div>
+                    <div style="margin: 2px 1rem; flex: auto;">
+                        <label style="display:block; margin-bottom:1rem;" for="greenMaxBrightness2">Max
+                            Brightness:</label>
+                        <input style="width:100%;" type="range" class="form-range ledRange"
+                               id="greenMaxBrightness2"
+                               name="greenMaxBrightness2" min="0" max="255" value="128">
+                        <div style="text-align:center;">
+                            <span id="greenMaxBrightness2Value">128</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <h3 style="text-align:center;">Blue</h3>
+            <div style="flex-wrap:wrap; text-align: center;">
+                <div style="display:flex; flex-direction: row;flex-wrap:wrap;">
+                    <div style="margin: 2px 1rem; flex: auto; max-width:25rem;">
+                        <label style="display:block; margin-bottom:1rem;" for="blueFadeInDelay2">Fade In
+                            Delay:</label>
+                        <input style="width:100%;" type="range" class="form-range ledRange" id="blueFadeInDelay2"
+                               name="blueFadeInDelay2" min="0" max="30000" step="10" value="5000">
+                        <div style="text-align:center;">
+                            <span id="blueFadeInDelay2Value">5000</span> ms
+                        </div>
+                    </div>
+                    <div style="margin: 2px 1rem; flex: auto; max-width:25rem;">
+                        <label style="display:block; margin-bottom:1rem;" for="blueFadeInTime2">Fade In
+                            Time:</label>
+                        <input style="width:100%;" type="range" class="form-range ledRange" id="blueFadeInTime2"
+                               name="blueFadeInTime2" min="0" max="30000" step="10" value="5000">
+                        <div style="text-align:center;">
+                            <span id="blueFadeInTime2Value">5000</span> ms
+                        </div>
+                    </div>
+                    <div style="margin: 2px 1rem; flex: auto; max-width:25rem;">
+                        <label style="display:block; margin-bottom:1rem;" for="blueFadeHoldTime2">Hold Time:</label>
+                        <input style="width:100%;" type="range" class="form-range ledRange" id="blueFadeHoldTime2"
+                               name="blueFadeHoldTime2" min="0" max="30000" step="10" value="5000">
+                        <div style="text-align:center;">
+                            <span id="blueFadeHoldTime2Value">5000</span> ms
+                        </div>
+                    </div>
+                    <div style="margin: 2px 1rem; flex: auto; max-width:25rem;">
+                        <label style="display:block; margin-bottom:1rem;" for="blueFadeOutTime2">Fade Out
+                            Time:</label>
+                        <input style="width:100%;" type="range" class="form-range ledRange" id="blueFadeOutTime2"
+                               name="blueFadeOutTime2" min="0" max="30000" step="10" value="5000">
+                        <div style="text-align:center;">
+                            <span id="blueFadeOutTime2Value">5000</span> ms
+                        </div>
+                    </div>
+                    <div style="margin: 2px 1rem; flex: auto;">
+                        <label style="display:block; margin-bottom:1rem;" for="blueMaxBrightness2">Max
+                            Brightness:</label>
+                        <input style="width:100%;" type="range" class="form-range ledRange"
+                               id="blueMaxBrightness2"
+                               name="blueMaxBrightness2" min="0" max="255" value="128">
+                        <div style="text-align:center;">
+                            <span id="blueMaxBrightness2Value">128</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="flex:1;">
+                <button type="submit"
+                        style="display:block; width:100%; padding:0.5rem 1rem; background-color:#0d6efd; color:#fff; border:none; border-radius:0.25rem; margin-top:15px;">
+                    Save Config 2
+                </button>
+            </div>
+        </form>
+    </div>
+    <div id="led_3" class="slowLedSection">
+        <h2>Config 3</h2>
+        <form id="configForm3">
+            <h3 style="text-align:center;">Red</h3>
+            <div style="flex-wrap:wrap; text-align: center;">
+                <div style="display:flex; flex-direction: row;flex-wrap:wrap;">
+                    <div style="margin: 2px 1rem; flex: auto; max-width:25rem;">
+                        <label style="display:block; margin-bottom:1rem;" for="redFadeInDelay3">Fade In
+                            Delay:</label>
+                        <input style="width:100%;" type="range" class="form-range ledRange" id="redFadeInDelay3"
+                               name="redFadeInDelay3" min="0" max="30000" step="10" value="5000">
+                        <div style="text-align:center;">
+                            <span id="redFadeInDelay3Value">5000</span> ms
+                        </div>
+                    </div>
+                    <div style="margin: 2px 1rem; flex: auto; max-width:25rem;">
+                        <label style="display:block; margin-bottom:1rem;" for="redFadeInTime3">Fade In Time:</label>
+                        <input style="width:100%;" type="range" class="form-range ledRange" id="redFadeInTime3"
+                               name="redFadeInTime3" min="0" max="30000" step="10" value="5000">
+                        <div style="text-align:center;">
+                            <span id="redFadeInTime3Value">5000</span> ms
+                        </div>
+                    </div>
+                    <div style="margin: 2px 1rem; flex: auto; max-width:25rem;">
+                        <label style="display:block; margin-bottom:1rem;" for="redFadeHoldTime3">Hold Time:</label>
+                        <input style="width:100%;" type="range" class="form-range ledRange" id="redFadeHoldTime3"
+                               name="redFadeHoldTime3" min="0" max="30000" step="10" value="5000">
+                        <div style="text-align:center;">
+                            <span id="redFadeHoldTime3Value">5000</span> ms
+                        </div>
+                    </div>
+                    <div style="margin: 2px 1rem; flex: auto; max-width:25rem;">
+                        <label style="display:block; margin-bottom:1rem;" for="redFadeOutTime3">Fade Out
+                            Time:</label>
+                        <input style="width:100%;" type="range" class="form-range ledRange" id="redFadeOutTime3"
+                               name="redFadeOutTime3" min="0" max="30000" step="10" value="5000">
+                        <div style="text-align:center;">
+                            <span id="redFadeOutTime3Value">5000</span> ms
+                        </div>
+                    </div>
+                    <div style="margin: 2px 1rem; flex: auto;">
+                        <label style="display:block; margin-bottom:1rem;" for="redMaxBrightness3">Max
+                            Brightness:</label>
+                        <input style="width:100%;" type="range" class="form-range ledRange" id="redMaxBrightness3"
+                               name="redMaxBrightness3" min="0" max="255" value="128">
+                        <div style="text-align:center;">
+                            <span id="redMaxBrightness3Value">128</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <h3 style="text-align:center;">Green</h3>
+            <div style="flex-wrap:wrap; text-align: center;">
+                <div style="display:flex; flex-direction: row;flex-wrap:wrap;">
+                    <div style="margin: 2px 1rem; flex: auto; max-width:25rem;">
+                        <label style="display:block; margin-bottom:1rem;" for="greenFadeInDelay3">Fade In
+                            Delay:</label>
+                        <input style="width:100%;" type="range" class="form-range ledRange" id="greenFadeInDelay3"
+                               name="greenFadeInDelay3" min="0" max="30000" step="10" value="5000">
+                        <div style="text-align:center;">
+                            <span id="greenFadeInDelay3Value">5000</span> ms
+                        </div>
+                    </div>
+                    <div style="margin: 2px 1rem; flex: auto; max-width:25rem;">
+                        <label style="display:block; margin-bottom:1rem;" for="greenFadeInTime3">Fade In
+                            Time:</label>
+                        <input style="width:100%;" type="range" class="form-range ledRange" id="greenFadeInTime3"
+                               name="greenFadeInTime3" min="0" max="30000" step="10" value="5000">
+                        <div style="text-align:center;">
+                            <span id="greenFadeInTime3Value">5000</span> ms
+                        </div>
+                    </div>
+                    <div style="margin: 2px 1rem; flex: auto; max-width:25rem;">
+                        <label style="display:block; margin-bottom:1rem;" for="greenFadeHoldTime3">Hold
+                            Time:</label>
+                        <input style="width:100%;" type="range" class="form-range ledRange"
+                               id="greenFadeHoldTime3"
+                               name="greenFadeHoldTime3" min="0" max="30000" step="10" value="5000">
+                        <div style="text-align:center;">
+                            <span id="greenFadeHoldTime3Value">5000</span> ms
+                        </div>
+                    </div>
+                    <div style="margin: 2px 1rem; flex: auto; max-width:25rem;">
+                        <label style="display:block; margin-bottom:1rem;" for="greenFadeOutTime3">Fade Out
+                            Time:</label>
+                        <input style="width:100%;" type="range" class="form-range ledRange" id="greenFadeOutTime3"
+                               name="greenFadeOutTime3" min="0" max="30000" step="10" value="5000">
+                        <div style="text-align:center;">
+                            <span id="greenFadeOutTime3Value">5000</span> ms
+                        </div>
+                    </div>
+                    <div style="margin: 2px 1rem; flex: auto;">
+                        <label style="display:block; margin-bottom:1rem;" for="greenMaxBrightness3">Max
+                            Brightness:</label>
+                        <input style="width:100%;" type="range" class="form-range ledRange"
+                               id="greenMaxBrightness3"
+                               name="greenMaxBrightness3" min="0" max="255" value="128">
+                        <div style="text-align:center;">
+                            <span id="greenMaxBrightness3Value">128</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <h3 style="text-align:center;">Blue</h3>
+            <div style="flex-wrap:wrap; text-align: center;">
+                <div style="display:flex; flex-direction: row;flex-wrap:wrap;">
+                    <div style="margin: 2px 1rem; flex: auto; max-width:25rem;">
+                        <label style="display:block; margin-bottom:1rem;" for="blueFadeInDelay3">Fade In
+                            Delay:</label>
+                        <input style="width:100%;" type="range" class="form-range ledRange" id="blueFadeInDelay3"
+                               name="blueFadeInDelay3" min="0" max="30000" step="10" value="5000">
+                        <div style="text-align:center;">
+                            <span id="blueFadeInDelay3Value">5000</span> ms
+                        </div>
+                    </div>
+                    <div style="margin: 2px 1rem; flex: auto; max-width:25rem;">
+                        <label style="display:block; margin-bottom:1rem;" for="blueFadeInTime3">Fade In
+                            Time:</label>
+                        <input style="width:100%;" type="range" class="form-range ledRange" id="blueFadeInTime3"
+                               name="blueFadeInTime3" min="0" max="30000" step="10" value="5000">
+                        <div style="text-align:center;">
+                            <span id="blueFadeInTime3Value">5000</span> ms
+                        </div>
+                    </div>
+                    <div style="margin: 2px 1rem; flex: auto; max-width:25rem;">
+                        <label style="display:block; margin-bottom:1rem;" for="blueFadeHoldTime3">Hold Time:</label>
+                        <input style="width:100%;" type="range" class="form-range ledRange" id="blueFadeHoldTime3"
+                               name="blueFadeHoldTime3" min="0" max="30000" step="10" value="5000">
+                        <div style="text-align:center;">
+                            <span id="blueFadeHoldTime3Value">5000</span> ms
+                        </div>
+                    </div>
+                    <div style="margin: 2px 1rem; flex: auto; max-width:25rem;">
+                        <label style="display:block; margin-bottom:1rem;" for="blueFadeOutTime3">Fade Out
+                            Time:</label>
+                        <input style="width:100%;" type="range" class="form-range ledRange" id="blueFadeOutTime3"
+                               name="blueFadeOutTime3" min="0" max="30000" step="10" value="5000">
+                        <div style="text-align:center;">
+                            <span id="blueFadeOutTime3Value">5000</span> ms
+                        </div>
+                    </div>
+                    <div style="margin: 2px 1rem; flex: auto;">
+                        <label style="display:block; margin-bottom:1rem;" for="blueMaxBrightness3">Max
+                            Brightness:</label>
+                        <input style="width:100%;" type="range" class="form-range ledRange"
+                               id="blueMaxBrightness3"
+                               name="blueMaxBrightness3" min="0" max="255" value="128">
+                        <div style="text-align:center;">
+                            <span id="blueMaxBrightness3Value">128</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="flex:1;">
+                <button type="submit"
+                        style="display:block; width:100%; padding:0.5rem 1rem; background-color:#0d6efd; color:#fff; border:none; border-radius:0.25rem; margin-top:15px;">
+                    Save Config 3
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $(".slowLedSection").hide();
+        $(".slowLedSection.activeSection").show();
+
+        // Get the profile from the server and update the select
+        function updateProfileSelect() {
+            // Make a GET request to the server
+            fetch("/cgi-bin/luci/admin/system/slowled/profile")
+                .then(response => response.json()) // Parse the response as JSON
+                .then(data => {
+                    // Update the value of the select
+                    document.querySelector("#profileSelect").value = data.profile;
+                })
+                .catch(error => console.error(error));
+        }
+
+// Handle form submission and send the data to the server
+        function handleSubmit(event) {
+            // Prevent the default form submission behavior
+            event.preventDefault();
+
+            // Get the selected profile value from the form
+            const activeProfile = document.querySelector("#profileSelect").value;
+
+            // Make a POST request to the server
+            fetch("/cgi-bin/luci/admin/system/slowled/activate", {
+                method: "POST",
+                headers: {"Content-Type": "application/x-www-form-urlencoded"},
+                body: `active_profile=${activeProfile}`
+            })
+                .then(response => {
+                    if (response.ok) {
+                        console.log("Config saved successfully.");
+                    } else {
+                        console.error("Error saving config.");
+                    }
+                })
+                .catch(error => console.error(error));
+        }
+
+// Add an event listener to the form for form submission
+        document.querySelector("#profileForm").addEventListener("submit", handleSubmit);
+
+// Call the updateProfileSelect function once on page load
+        updateProfileSelect();
+
+        // Load configuration data from UCI
+        for (var i = 1; i < 4; i++) {
+            (function (i) {
+                $.getJSON("/cgi-bin/luci/admin/system/slowled/config" + i, function (data) {
+                    console.log("Parsing: ", data);
+
+                    for (const [varName, value] of Object.entries(data)) {
+                        window[varName + i] = value;
+                    }
+
+                    var snakeCaseDict = {
+                        "red_fade_in_delay": "redFadeInDelay",
+                        "red_fade_in_time": "redFadeInTime",
+                        "red_fade_hold_time": "redFadeHoldTime",
+                        "red_fade_out_time": "redFadeOutTime",
+                        "red_max_brightness": "redMaxBrightness",
+                        "green_fade_in_delay": "greenFadeInDelay",
+                        "green_fade_in_time": "greenFadeInTime",
+                        "green_fade_hold_time": "greenFadeHoldTime",
+                        "green_fade_out_time": "greenFadeOutTime",
+                        "green_max_brightness": "greenMaxBrightness",
+                        "blue_fade_in_delay": "blueFadeInDelay",
+                        "blue_fade_in_time": "blueFadeInTime",
+                        "blue_fade_hold_time": "blueFadeHoldTime",
+                        "blue_fade_out_time": "blueFadeOutTime",
+                        "blue_max_brightness": "blueMaxBrightness"
+                    };
+
+                    for (var key in snakeCaseDict) {
+                        var varName = snakeCaseDict[key];
+                        var varValue = window[key + i] !== undefined ? window[key + i] : (key.includes("time") ? 5000 : 128);
+                        $("#" + varName + i).val(varValue);
+                        $("#" + varName + i + "Value").text(varValue);
+                    }
+                });
+            })(i);
+        }
+
+        $('#ledTabs li').click(function () {
+            var tab_id = $(this).data('tgt');
+
+            // Set all tabs as inactive and hide them
+            $('.slowLedSection').addClass('cbi-tab-disabled').hide();
+
+            $(this).removeClass('cbi-tab-disabled');
+
+            // Set the clicked tab as active and show it
+            $("#" + tab_id).show();
+            $(".tab.active").removeClass("active");
+            $(this).addClass('active');
+        });
+
+        $(".ledRange").on("input", function () {
+            $("#" + $(this).id + "Value").text($(this).val());
+        });
+
+        // Handle form submission
+        $("#configForm1").submit(function (event) {
+            event.preventDefault();
+
+            // Build object from form data
+            var configData = {
+                redFadeInDelay: $("#redFadeInDelay1").val(),
+                redFadeInTime: $("#redFadeInTime1").val(),
+                redFadeHoldTime: $("#redFadeHoldTime1").val(),
+                redFadeOutTime: $("#redFadeOutTime1").val(),
+                redMaxBrightness: $("#redMaxBrightness1").val(),
+                blueFadeInDelay: $("#blueFadeInDelay1").val(),
+                blueFadeInTime: $("#blueFadeInTime1").val(),
+                blueFadeHoldTime: $("#blueFadeHoldTime1").val(),
+                blueFadeOutTime: $("#blueFadeOutTime1").val(),
+                blueMaxBrightness: $("#blueMaxBrightness1").val(),
+                greenFadeInDelay: $("#greenFadeInDelay1").val(),
+                greenFadeInTime: $("#greenFadeInTime1").val(),
+                greenFadeHoldTime: $("#greenFadeHoldTime1").val(),
+                greenFadeOutTime: $("#greenFadeOutTime1").val(),
+                greenMaxBrightness: $("#greenMaxBrightness1").val()
+            };
+
+            // Save configuration data to UCI
+            $.ajax({
+                type: "POST",
+                url: "/cgi-bin/luci/admin/system/slowled/update1",
+                data: configData,
+                success: function () {
+                    console.log("Configuration saved successfully!");
+                },
+                error: function () {
+                    alert("Error saving configuration!");
+                }
+            });
+        });
+
+        $("#configForm2").submit(function (event) {
+            event.preventDefault();
+
+            // Build object from form data
+            var configData = {
+                redFadeInDelay: $("#redFadeInDelay2").val(),
+                redFadeInTime: $("#redFadeInTime2").val(),
+                redFadeHoldTime: $("#redFadeHoldTime2").val(),
+                redFadeOutTime: $("#redFadeOutTime2").val(),
+                redMaxBrightness: $("#redMaxBrightness2").val(),
+                blueFadeInDelay: $("#blueFadeInDelay2").val(),
+                blueFadeInTime: $("#blueFadeInTime2").val(),
+                blueFadeHoldTime: $("#blueFadeHoldTime2").val(),
+                blueFadeOutTime: $("#blueFadeOutTime2").val(),
+                blueMaxBrightness: $("#blueMaxBrightness2").val(),
+                greenFadeInDelay: $("#greenFadeInDelay2").val(),
+                greenFadeInTime: $("#greenFadeInTime2").val(),
+                greenFadeHoldTime: $("#greenFadeHoldTime2").val(),
+                greenFadeOutTime: $("#greenFadeOutTime2").val(),
+                greenMaxBrightness: $("#greenMaxBrightness2").val()
+            };
+
+            // Save configuration data to UCI
+            $.ajax({
+                type: "POST",
+                url: "/cgi-bin/luci/admin/system/slowled/update2",
+                data: configData,
+                success: function () {
+                    console.log("Configuration saved successfully!");
+                },
+                error: function () {
+                    alert("Error saving configuration!");
+                }
+            });
+        });
+
+        $("#configForm3").submit(function (event) {
+            event.preventDefault();
+
+            // Build object from form data
+            var configData = {
+                redFadeInDelay: $("#redFadeInDelay3").val(),
+                redFadeInTime: $("#redFadeInTime3").val(),
+                redFadeHoldTime: $("#redFadeHoldTime3").val(),
+                redFadeOutTime: $("#redFadeOutTime3").val(),
+                redMaxBrightness: $("#redMaxBrightness3").val(),
+                blueFadeInDelay: $("#blueFadeInDelay3").val(),
+                blueFadeInTime: $("#blueFadeInTime3").val(),
+                blueFadeHoldTime: $("#blueFadeHoldTime3").val(),
+                blueFadeOutTime: $("#blueFadeOutTime3").val(),
+                blueMaxBrightness: $("#blueMaxBrightness3").val(),
+                greenFadeInDelay: $("#greenFadeInDelay3").val(),
+                greenFadeInTime: $("#greenFadeInTime3").val(),
+                greenFadeHoldTime: $("#greenFadeHoldTime3").val(),
+                greenFadeOutTime: $("#greenFadeOutTime3").val(),
+                greenMaxBrightness: $("#greenMaxBrightness3").val()
+            };
+
+            // Save configuration data to UCI
+            $.ajax({
+                type: "POST",
+                url: "/cgi-bin/luci/admin/system/slowled/update3",
+                data: configData,
+                success: function () {
+                    console.log("Configuration saved successfully!");
+                },
+                error: function () {
+                    alert("Error saving configuration!");
+                }
+            });
+        });
+    });
+</script>
+<%+footer%>

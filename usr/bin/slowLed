@@ -1,0 +1,164 @@
+#!/usr/bin/env sh
+
+# Set default values for LED configuration
+RED_FADE_DELAY=0       # in milliseconds
+RED_FADE_IN_TIME=5000  # in milliseconds
+RED_HOLD_TIME=0        # in milliseconds
+RED_FADE_OUT_TIME=5000 # in milliseconds
+RED_MAX_BRIGHTNESS=128
+
+GREEN_FADE_DELAY=0       # in milliseconds
+GREEN_FADE_IN_TIME=5000  # in milliseconds
+GREEN_HOLD_TIME=0        # in milliseconds
+GREEN_FADE_OUT_TIME=5000 # in milliseconds
+GREEN_MAX_BRIGHTNESS=128
+
+BLUE_FADE_DELAY=0       # in milliseconds
+BLUE_FADE_IN_TIME=5000  # in milliseconds
+BLUE_HOLD_TIME=0        # in milliseconds
+BLUE_FADE_OUT_TIME=5000 # in milliseconds
+BLUE_MAX_BRIGHTNESS=128
+
+TGT_CONFIG=1
+if [ -f "/etc/init.d/slowled_target" ]; then
+  TGT_CONFIG=$(cat $CONF_FILE)
+fi
+
+
+CONF_FILE="/etc/slowled$TGT_CONFIG.conf"
+# Read LED configuration from config file if it exists
+if [ -f $CONF_FILE ]; then
+  echo "Loading config $CONF_FILE"
+  LED_CONFIG=$(cat $CONF_FILE)
+
+  RED_FADE_DELAY=$(echo "$LED_CONFIG" | grep -o 'red_fade_in_delay=[^,]*' | cut -d= -f2)
+  RED_FADE_IN_TIME=$(echo "$LED_CONFIG" | grep -o 'red_fade_in_time=[^,]*' | cut -d= -f2)
+  RED_HOLD_TIME=$(echo "$LED_CONFIG" | grep -o 'red_fade_hold_time=[^,]*' | cut -d= -f2)
+  RED_FADE_OUT_TIME=$(echo "$LED_CONFIG" | grep -o 'red_fade_out_time=[^,]*' | cut -d= -f2)
+  RED_MAX_BRIGHTNESS=$(echo "$LED_CONFIG" | grep -o 'red_max_brightness=[^,]*' | cut -d= -f2)
+
+  GREEN_FADE_DELAY=$(echo "$LED_CONFIG" | grep -o 'green_fade_in_delay=[^,]*' | cut -d= -f2)
+  GREEN_FADE_IN_TIME=$(echo "$LED_CONFIG" | grep -o 'green_fade_in_time=[^,]*' | cut -d= -f2)
+  GREEN_HOLD_TIME=$(echo "$LED_CONFIG" | grep -o 'green_fade_hold_time=[^,]*' | cut -d= -f2)
+  GREEN_FADE_OUT_TIME=$(echo "$LED_CONFIG" | grep -o 'green_fade_out_time=[^,]*' | cut -d= -f2)
+  GREEN_MAX_BRIGHTNESS=$(echo "$LED_CONFIG" | grep -o 'green_max_brightness=[^,]*' | cut -d= -f2)
+
+  BLUE_FADE_DELAY=$(echo "$LED_CONFIG" | grep -o 'blue_fade_in_delay=[^,]*' | cut -d= -f2)
+  BLUE_FADE_IN_TIME=$(echo "$LED_CONFIG" | grep -o 'blue_fade_in_time=[^,]*' | cut -d= -f2)
+  BLUE_HOLD_TIME=$(echo "$LED_CONFIG" | grep -o 'blue_fade_hold_time=[^,]*' | cut -d= -f2)
+  BLUE_FADE_OUT_TIME=$(echo "$LED_CONFIG" | grep -o 'blue_fade_out_time=[^,]*' | cut -d= -f2)
+  BLUE_MAX_BRIGHTNESS=$(echo "$LED_CONFIG" | grep -o 'blue_max_brightness=[^,]*' | cut -d= -f2)
+fi
+
+# Set initial brightness to 0
+echo 0 >/sys/class/leds/LED0_Red/brightness
+echo 0 >/sys/class/leds/LED0_Green/brightness
+echo 0 >/sys/class/leds/LED0_Blue/brightness
+
+RED_LAST_CHANGE_TIME=0
+GREEN_LAST_CHANGE_TIME=0
+BLUE_LAST_CHANGE_TIME=0
+
+# Brightness vars
+RED_BRIGHTNESS=0
+GREEN_BRIGHTNESS=0
+BLUE_BRIGHTNESS=0
+
+# Reset counters
+RR=0
+RB=0
+RG=0
+
+
+get_uptime_ms() {
+  local MS
+  read UPTIME </proc/uptime
+  UPTIME="${UPTIME%%[^0-9.]*}" # strip the other listed time
+  MS="${UPTIME##*.}0"          # extra zero turns 100ths of seconds into 1000ths
+  UPTIME="${UPTIME%%.*}$MS"    # the time since boot in milliseconds
+}
+
+get_uptime_ms
+last_time=$UPTIME
+while true; do
+  get_uptime_ms
+  # Calculate the time difference in milliseconds
+  diff=$(($UPTIME - $last_time))
+  # Update the last time variable
+  last_time=$UPTIME
+
+  if [[ $diff -ge 1 ]]; then
+    # Determine state of red LED
+    if [ $RED_LAST_CHANGE_TIME -le $RED_FADE_DELAY ]; then
+      # LED is delayed, set brightness to 0
+      RED_BRIGHTNESS=0
+    elif [ $RED_LAST_CHANGE_TIME -le $((RED_FADE_DELAY + RED_FADE_IN_TIME)) ]; then
+      # LED is fading in
+      percent_done=$(((RED_LAST_CHANGE_TIME - RED_FADE_DELAY) * 100 / RED_FADE_IN_TIME))
+      RED_BRIGHTNESS=$((RED_MAX_BRIGHTNESS * percent_done / 100))
+    elif [ $RED_LAST_CHANGE_TIME -le $((RED_FADE_DELAY + RED_FADE_IN_TIME + RED_HOLD_TIME)) ]; then
+      RED_BRIGHTNESS=$RED_MAX_BRIGHTNESS
+    elif [ $RED_LAST_CHANGE_TIME -le $((RED_FADE_DELAY + RED_FADE_IN_TIME + RED_HOLD_TIME + RED_FADE_OUT_TIME)) ]; then
+      # LED is fading out
+      percent_done=$(((RED_LAST_CHANGE_TIME - RED_FADE_DELAY - RED_FADE_IN_TIME - RED_HOLD_TIME) * 100 / RED_FADE_OUT_TIME))
+      RED_BRIGHTNESS=$((RED_MAX_BRIGHTNESS - (RED_MAX_BRIGHTNESS * percent_done / 100)))
+    else
+      RR=1
+    fi
+
+    # Determine state of GREEN LED
+    if [ $GREEN_LAST_CHANGE_TIME -le $GREEN_FADE_DELAY ]; then
+      # LED is delayed, set GREEN_BRIGHTNESS to 0
+      GREEN_BRIGHTNESS=0
+    elif [ $GREEN_LAST_CHANGE_TIME -le $((GREEN_FADE_DELAY + GREEN_FADE_IN_TIME)) ]; then
+      percent_done=$(((GREEN_LAST_CHANGE_TIME - GREEN_FADE_DELAY) * 100 / GREEN_FADE_IN_TIME))
+      GREEN_BRIGHTNESS=$((GREEN_MAX_BRIGHTNESS * percent_done / 100))
+    elif [ $GREEN_LAST_CHANGE_TIME -le $((GREEN_FADE_DELAY + GREEN_FADE_IN_TIME + GREEN_HOLD_TIME)) ]; then
+      GREEN_BRIGHTNESS=$GREEN_MAX_BRIGHTNESS
+    elif [ $GREEN_LAST_CHANGE_TIME -le $((GREEN_FADE_DELAY + GREEN_FADE_IN_TIME + GREEN_HOLD_TIME + GREEN_FADE_OUT_TIME)) ]; then
+      # LED is fading out
+      percent_done=$(((GREEN_LAST_CHANGE_TIME - GREEN_FADE_DELAY - GREEN_FADE_IN_TIME - GREEN_HOLD_TIME) * 100 / GREEN_FADE_OUT_TIME))
+      GREEN_BRIGHTNESS=$((GREEN_MAX_BRIGHTNESS - (GREEN_MAX_BRIGHTNESS * percent_done / 100)))
+    else
+      # Reset timer and start over
+      RG=1
+    fi
+
+    # Determine state of BLUE LED
+    if [ $BLUE_LAST_CHANGE_TIME -le $BLUE_FADE_DELAY ]; then
+      # LED is delayed, set BLUE_BRIGHTNESS to 0
+      BLUE_BRIGHTNESS=0
+    elif [ $BLUE_LAST_CHANGE_TIME -le $((BLUE_FADE_DELAY + BLUE_FADE_IN_TIME)) ]; then
+      percent_done=$(((BLUE_LAST_CHANGE_TIME - BLUE_FADE_DELAY) * 100 / BLUE_FADE_IN_TIME))
+      BLUE_BRIGHTNESS=$((BLUE_MAX_BRIGHTNESS * percent_done / 100))
+    elif [ $BLUE_LAST_CHANGE_TIME -le $((BLUE_FADE_DELAY + BLUE_FADE_IN_TIME + BLUE_HOLD_TIME)) ]; then
+      BLUE_BRIGHTNESS=$BLUE_MAX_BRIGHTNESS
+    elif [ $BLUE_LAST_CHANGE_TIME -le $((BLUE_FADE_DELAY + BLUE_FADE_IN_TIME + BLUE_HOLD_TIME + BLUE_FADE_OUT_TIME)) ]; then
+      # LED is fading out
+      percent_done=$(((BLUE_LAST_CHANGE_TIME - BLUE_FADE_DELAY - BLUE_FADE_IN_TIME - BLUE_HOLD_TIME) * 100 / BLUE_FADE_OUT_TIME))
+      BLUE_BRIGHTNESS=$((BLUE_MAX_BRIGHTNESS - (BLUE_MAX_BRIGHTNESS * percent_done / 100)))
+    else
+      RB=1
+    fi
+
+    echo "$RED_BRIGHTNESS" >/sys/class/leds/LED0_Red/brightness
+    echo "$GREEN_BRIGHTNESS" >/sys/class/leds/LED0_Green/brightness
+    echo "$BLUE_BRIGHTNESS" >/sys/class/leds/LED0_Blue/brightness
+
+    RED_LAST_CHANGE_TIME=$((RED_LAST_CHANGE_TIME + diff))
+    if [ $RR -ge 1 ]; then
+      RR=0
+      RED_LAST_CHANGE_TIME=0
+    fi
+    GREEN_LAST_CHANGE_TIME=$((GREEN_LAST_CHANGE_TIME + diff))
+    if [ $RG -ge 1 ]; then
+      RG=0
+      GREEN_LAST_CHANGE_TIME=0
+    fi
+    BLUE_LAST_CHANGE_TIME=$((BLUE_LAST_CHANGE_TIME + diff))
+    if [ $RB -ge 1 ]; then
+      RB=0
+      BLUE_LAST_CHANGE_TIME=0
+    fi
+  fi
+done
