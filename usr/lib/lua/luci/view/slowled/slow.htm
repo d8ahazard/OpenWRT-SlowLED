@@ -533,7 +533,6 @@
     </div>
 </div>
 
-</div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function () {
@@ -552,7 +551,7 @@
                 .catch(error => console.error(error));
         }
 
-// Handle form submission and send the data to the server
+        // Handle form submission and send the data to the server
         function handleSubmit(event) {
             // Prevent the default form submission behavior
             event.preventDefault();
@@ -576,23 +575,23 @@
                 .catch(error => console.error(error));
         }
 
-// Add an event listener to the form for form submission
+        // Add an event listener to the form for form submission
         document.querySelector("#profileForm").addEventListener("submit", handleSubmit);
 
-// Call the updateProfileSelect function once on page load
+        // Call the updateProfileSelect function once on page load
         updateProfileSelect();
 
         // Load configuration data from UCI
-        for (var i = 1; i < 4; i++) {
+        for (let i = 1; i < 4; i++) {
             (function (i) {
                 $.getJSON("/cgi-bin/luci/admin/system/slowled/config" + i, function (data) {
                     console.log("Parsing: ", data);
 
-                    for (const [varName, value] of Object.entries(data)) {
-                        window[varName + i] = value;
+                    for (const [letName, value] of Object.entries(data)) {
+                        window[letName + i] = value;
                     }
 
-                    var snakeCaseDict = {
+                    let snakeCaseDict = {
                         "red_fade_in_delay": "redFadeInDelay",
                         "red_fade_in_time": "redFadeInTime",
                         "red_fade_hold_time": "redFadeHoldTime",
@@ -610,18 +609,18 @@
                         "blue_max_brightness": "blueMaxBrightness"
                     };
 
-                    for (var key in snakeCaseDict) {
-                        var varName = snakeCaseDict[key];
-                        var varValue = window[key + i] !== undefined ? window[key + i] : (key.includes("time") ? 5000 : 128);
-                        $("#" + varName + i).val(varValue);
-                        $("#" + varName + i + "Value").text(varValue);
+                    for (let key in snakeCaseDict) {
+                        let letName = snakeCaseDict[key];
+                        let letValue = window[key + i] !== undefined ? window[key + i] : (key.includes("time") ? 5000 : 128);
+                        $("#" + letName + i).val(letValue);
+                        $("#" + letName + i + "Value").text(letValue);
                     }
                 });
             })(i);
         }
 
         $('#ledTabs li').click(function () {
-            var tab_id = $(this).data('tgt');
+            let tab_id = $(this).data('tgt');
 
             // Set all tabs as inactive and hide them
             $('.slowLedSection').addClass('cbi-tab-disabled').hide();
@@ -643,7 +642,7 @@
             event.preventDefault();
 
             // Build object from form data
-            var configData = {
+            let configData = {
                 redFadeInDelay: $("#redFadeInDelay1").val(),
                 redFadeInTime: $("#redFadeInTime1").val(),
                 redFadeHoldTime: $("#redFadeHoldTime1").val(),
@@ -679,7 +678,7 @@
             event.preventDefault();
 
             // Build object from form data
-            var configData = {
+            let configData = {
                 redFadeInDelay: $("#redFadeInDelay2").val(),
                 redFadeInTime: $("#redFadeInTime2").val(),
                 redFadeHoldTime: $("#redFadeHoldTime2").val(),
@@ -715,7 +714,7 @@
             event.preventDefault();
 
             // Build object from form data
-            var configData = {
+            let configData = {
                 redFadeInDelay: $("#redFadeInDelay3").val(),
                 redFadeInTime: $("#redFadeInTime3").val(),
                 redFadeHoldTime: $("#redFadeHoldTime3").val(),
