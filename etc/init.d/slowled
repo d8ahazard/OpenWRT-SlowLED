@@ -1,21 +1,46 @@
 #!/bin/sh /etc/rc.common
 
-START=00
+START=99
 
-USE_PROCD=1
-NAME=urngd
-PROG=/usr/bin/slowled
+NAME=slowled
+PROG=/usr/bin/slowLed
 
-start_service() {
-    procd_open_instance
-    procd_set_param command "$PROG"
-    procd_close_instance
+start() {
+    echo "Starting slowled"
+    echo "Checking if slowled is already running"
+    if ! pgrep -f "$PROG" >/dev/null; then
+        echo "slowled is not running. Starting it now."
+        "$PROG" &
+        echo "slowled started successfully."
+    else
+        echo "slowled is already running. Skipping start."
+    fi
 }
 
-stop_service() {
-    procd_close_instance
+stop() {
+    echo "Stopping slowled"
+    # Get the process ID of the slowled script
+    local pid="$(pgrep -f "$PROG")"
+
+    # If the script is running, kill it by its process ID
+    if [ -n "$pid" ]; then
+        echo "Killing slowled process with PID $pid."
+        kill "$pid"
+    else
+        echo "slowled is not running. Skipping stop."
+    fi
 }
 
-reload_service() {
-    procd_send_signal $PROG
+restart() {
+    echo "Restarting slowled"
+    # Stop the slowled script by killing the process
+    stop
+
+    # Wait for the process to stop
+    while pgrep -f "$PROG" >/dev/null; do
+        sleep 1
+    done
+
+    # Start the slowled script in the background
+    start
 }
