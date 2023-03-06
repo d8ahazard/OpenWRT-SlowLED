@@ -22,7 +22,7 @@ By adjusting the above settings for each LED, you can create a pretty wide array
 
 Assigning the various profiles to actions is not presently implemented, but by using the hotplug.rc directory, 
 all one needs to do is assign a script to whatever state change is desired, and then echo the desired profile number 
-to /etc/slowled.target, then call /etc/init.d/slowled restart to restart the service with the new config.
+to /etc/slowled.target, then call /etc/init.d/slowled restart_service to restart the service with the new config.
 
 I'm sure my OCD self will add more stuff to this as it strikes me, but for now, this feels
 like a pretty good starting point.
