@@ -1,12 +1,25 @@
 ## Intro
 
-How do I use this?
+### Installation
 
-I still need to make a package, so for now, you need to download the files in this repo,
-extract them somewhere on your computer, and then use sftp to copy them onto your AP in their respective folders.
+1. Download this repository as a zip, extract somewhere on your HDD.
+2. Install luci-compat (If you are using a webui)
 
-Reload your webUI, and you should have "Slow LED Control" in your system dropdown.
+`opkg update && opkg install luci-compat`
 
+3. Use SCP to copy the /etc and /usr dirs to the root of your OpenWRT device's filesystem. If not using luci, it's not necessary to copy the user/lib directory.
+4. Set permissions on /etc/init.d/slowled:
+
+`chmod 755 /etc/init.d/slowled`
+
+4. Restart the httpd service:
+
+`/etc/init.d/uhttpd restart`
+
+5. Open the WebUI, and navigate to the configurator from the System dropdown.
+
+
+### Usage
 From the main page, you can configure three separate profiles for your LEDs.
 
 Each LED has the same settings:
@@ -19,10 +32,9 @@ Max Brightness - The Maximum Brightness for the LED.
 
 By adjusting the above settings for each LED, you can create a pretty wide array of effects.
 
-
 Assigning the various profiles to actions is not presently implemented, but by using the hotplug.rc directory, 
 all one needs to do is assign a script to whatever state change is desired, and then echo the desired profile number 
-to /etc/slowled.target, then call /etc/init.d/slowled restart_service to restart the service with the new config.
+to /etc/slowled.target, then call /etc/init.d/slowled restart to restart the service with the new config.
 
 I'm sure my OCD self will add more stuff to this as it strikes me, but for now, this feels
 like a pretty good starting point.
