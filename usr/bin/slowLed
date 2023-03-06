@@ -28,7 +28,6 @@ fi
 CONF_FILE="/etc/slowled$TGT_CONFIG.conf"
 # Read LED configuration from config file if it exists
 if [ -f $CONF_FILE ]; then
-  echo "Loading config $CONF_FILE"
   LED_CONFIG=$(cat $CONF_FILE)
 
   RED_FADE_DELAY=$(echo "$LED_CONFIG" | grep -o 'red_fade_in_delay=[^,]*' | cut -d= -f2)

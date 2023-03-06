@@ -1,19 +1,19 @@
 <%+header%>
-<h1 style="text-align:center; margin-bottom:1rem;">SlowLED Configurator</h1>
+<h1 style="text-align:center; margin-bottom:1rem;">SlowLED Profileurator</h1>
 <div style="max-width:800px; margin:0 auto;">
     <div style="display: flex; flex-wrap: wrap; align-items: center;">
         <div style="margin: 2px 1rem; flex: 1 1 25rem;">
             <form id="profileForm" style="display: flex; align-items: center;">
                 <label for="profileSelect" style="margin-right: 0.5rem;">Active profile</label>
                 <select id="profileSelect" style="flex: 1;">
-                    <option value="1">Config 1</option>
-                    <option value="2">Config 2</option>
-                    <option value="3">Config 3</option>
+                    <option value="1">Profile 1</option>
+                    <option value="2">Profile 2</option>
+                    <option value="3">Profile 3</option>
                 </select>
                 <div style="margin-left: 0.5rem;">
                     <button type="submit"
                         style="display:block; padding:0.5rem 1rem; background-color:#0d6efd; color:#fff; border:none; border-radius:0.25rem;">
-                        Load config
+                        Activate Profile
                     </button>
                 </div>
             </form>
@@ -23,18 +23,18 @@
 </div>
 <ul class="tabmenu tabs" id="ledTabs" style="display:flex; flex-wrap: wrap">
     <li class="tab active" data-tgt="led_1">
-        <a href="#">Config 1</a>
+        <a href="#">Profile 1</a>
     </li>
     <li class="tab" data-tgt="led_2">
-        <a href="#">Config 2</a>
+        <a href="#">Profile 2</a>
     </li>
     <li class="tab" data-tgt="led_3">
-        <a href="#">Config 3</a>
+        <a href="#">Profile 3</a>
     </li>
 </ul>
 <div class="some_section">
     <div id="led_1" class="slowLedSection activeSection">
-        <h2>Config 1</h2>
+        <h2>Profile 1</h2>
         <form id="configForm1">
             <h3 style="text-align:center;">Red</h3>
             <div style="flex-wrap:wrap; text-align: center;">
@@ -53,7 +53,7 @@
                         <input style="width:100%;" type="range" class="form-range ledRange" id="redFadeInTime1"
                                name="redFadeInTime1" min="0" max="30000" step="10" value="5000">
                         <div style="text-align:center;">
-                            <span id="redFadeInTimeValue">5000</span> ms
+                            <span id="redFadeInTime1Value">5000</span> ms
                         </div>
                     </div>
                     <div style="margin: 2px 1rem; flex: auto; max-width:25rem;">
@@ -61,7 +61,7 @@
                         <input style="width:100%;" type="range" class="form-range ledRange" id="redFadeHoldTime1"
                                name="redFadeHoldTime1" min="0" max="30000" step="10" value="5000">
                         <div style="text-align:center;">
-                            <span id="redFadeHoldTimeValue">5000</span> ms
+                            <span id="redFadeHoldTime1Value">5000</span> ms
                         </div>
                     </div>
                     <div style="margin: 2px 1rem; flex: auto; max-width:25rem;">
@@ -194,13 +194,13 @@
             <div style="flex:1;">
                 <button type="submit"
                         style="display:block; width:100%; padding:0.5rem 1rem; background-color:#0d6efd; color:#fff; border:none; border-radius:0.25rem; margin-top:15px;">
-                    Save Config 1
+                    Save Profile 1
                 </button>
             </div>
         </form>
     </div>
     <div id="led_2" class="slowLedSection">
-        <h2>Config 2</h2>
+        <h2>Profile 2</h2>
         <form id="configForm2">
             <h3 style="text-align:center;">Red</h3>
             <div style="flex-wrap:wrap; text-align: center;">
@@ -360,13 +360,13 @@
             <div style="flex:1;">
                 <button type="submit"
                         style="display:block; width:100%; padding:0.5rem 1rem; background-color:#0d6efd; color:#fff; border:none; border-radius:0.25rem; margin-top:15px;">
-                    Save Config 2
+                    Save Profile 2
                 </button>
             </div>
         </form>
     </div>
     <div id="led_3" class="slowLedSection">
-        <h2>Config 3</h2>
+        <h2>Profile 3</h2>
         <form id="configForm3">
             <h3 style="text-align:center;">Red</h3>
             <div style="flex-wrap:wrap; text-align: center;">
@@ -526,7 +526,7 @@
             <div style="flex:1;">
                 <button type="submit"
                         style="display:block; width:100%; padding:0.5rem 1rem; background-color:#0d6efd; color:#fff; border:none; border-radius:0.25rem; margin-top:15px;">
-                    Save Config 3
+                    Save Profile 3
                 </button>
             </div>
         </form>
@@ -568,7 +568,7 @@
             })
                 .then(response => {
                     if (response.ok) {
-                        console.log("Config saved successfully.");
+                        console.log("Profile saved successfully.");
                     } else {
                         console.error("Error saving config.");
                     }
@@ -635,7 +635,7 @@
         });
 
         $(".ledRange").on("input", function () {
-            $("#" + $(this).id + "Value").text($(this).val());
+            $("#" + this.id + "Value").text($(this).val());
         });
 
         // Handle form submission
@@ -667,7 +667,7 @@
                 url: "/cgi-bin/luci/admin/system/slowled/update1",
                 data: configData,
                 success: function () {
-                    console.log("Configuration saved successfully!");
+                    console.log("Profile saved successfully!");
                 },
                 error: function () {
                     alert("Error saving configuration!");
@@ -703,7 +703,7 @@
                 url: "/cgi-bin/luci/admin/system/slowled/update2",
                 data: configData,
                 success: function () {
-                    console.log("Configuration saved successfully!");
+                    console.log("Profile saved successfully!");
                 },
                 error: function () {
                     alert("Error saving configuration!");
@@ -739,7 +739,7 @@
                 url: "/cgi-bin/luci/admin/system/slowled/update3",
                 data: configData,
                 success: function () {
-                    console.log("Configuration saved successfully!");
+                    console.log("Profile saved successfully!");
                 },
                 error: function () {
                     alert("Error saving configuration!");

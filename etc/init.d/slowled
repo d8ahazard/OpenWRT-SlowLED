@@ -6,34 +6,22 @@ NAME=slowled
 PROG=/usr/bin/slowLed
 
 start() {
-    echo "Starting slowled"
-    echo "Checking if slowled is already running"
     if ! pgrep -f "$PROG" >/dev/null; then
-        echo "slowled is not running. Starting it now."
         "$PROG" &
-        echo "slowled started successfully."
-    else
-        echo "slowled is already running. Skipping start."
     fi
 }
 
 stop() {
-    echo "Stopping slowled"
     # Get the process ID of the slowled script
     local pid="$(pgrep -f "$PROG")"
 
     # If the script is running, kill it by its process ID
     if [ -n "$pid" ]; then
-        echo "Killing slowled process with PID $pid."
         kill "$pid"
-    else
-        echo "slowled is not running. Skipping stop."
     fi
 }
 
 restart() {
-    echo "Restarting slowled"
-    # Stop the slowled script by killing the process
     stop
 
     # Wait for the process to stop
@@ -43,4 +31,6 @@ restart() {
 
     # Start the slowled script in the background
     start
+    # Return success
+    exit 0
 }

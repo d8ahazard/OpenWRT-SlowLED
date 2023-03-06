@@ -41,6 +41,7 @@ function update_settings(file)
     local fs = require("nixio.fs")
     local os = require("os")
 
+
     -- Get the values from the form
     local red_fade_in_delay = tonumber(luci.http.formvalue("redFadeInDelay"))
     local red_fade_in_time = tonumber(luci.http.formvalue("redFadeInTime"))
@@ -73,8 +74,15 @@ function update_settings(file)
         return
     end
 
-    -- Restart the LED daemon
-    os.execute("/etc/init.d/slowled restart")
+        -- Restart the LED daemon
+    local success, err = pcall(function()
+        os.execute("/etc/init.d/slowled restart")
+    end)
+
+    if not success then
+        luci.http.status(500, "Failed to restart slowled service: " .. err)
+        return
+    end
 
     -- Redirect back to the main page
     luci.http.redirect(luci.dispatcher.build_url("admin", "system", "slowled"))
