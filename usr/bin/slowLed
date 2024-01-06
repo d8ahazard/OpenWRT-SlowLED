@@ -20,12 +20,14 @@ BLUE_FADE_OUT_TIME=5000 # in milliseconds
 BLUE_MAX_BRIGHTNESS=128
 
 TGT_CONFIG=1
-if [ -f "/etc/init.d/slowled_target" ]; then
-  TGT_CONFIG=$(cat $CONF_FILE)
+if [ -f "/etc/slowled.target" ]; then
+	logger -t "SLOWLED" "Found target file"
+  TGT_CONFIG=$(cat "/etc/slowled.target")
 fi
 
 
 CONF_FILE="/etc/slowled$TGT_CONFIG.conf"
+logger -t "SLOWLED" "Using SlowLED conf: $CONF_FILE"
 # Read LED configuration from config file if it exists
 if [ -f $CONF_FILE ]; then
   LED_CONFIG=$(cat $CONF_FILE)
@@ -63,6 +65,10 @@ RED_BRIGHTNESS=0
 GREEN_BRIGHTNESS=0
 BLUE_BRIGHTNESS=0
 
+LAST_RED_BRIGHTNESS=0
+LAST_GREEN_BRIGHTNESS=0
+LAST_BLUE_BRIGHTNESS=0
+
 # Reset counters
 RR=0
 RB=0
@@ -79,6 +85,8 @@ get_uptime_ms() {
 
 get_uptime_ms
 last_time=$UPTIME
+
+
 while true; do
   get_uptime_ms
   # Calculate the time difference in milliseconds
@@ -139,10 +147,23 @@ while true; do
     else
       RB=1
     fi
+	
+	if [ "$RED_BRIGHTNESS" != "$LAST_RED_BRIGHTNESS" ]; then
+		echo "$RED_BRIGHTNESS" > "/sys/class/leds/LED0_Red/brightness"
+		LAST_RED_BRIGHTNESS="$RED_BRIGHTNESS"
+	fi
 
-    echo "$RED_BRIGHTNESS" >/sys/class/leds/LED0_Red/brightness
-    echo "$GREEN_BRIGHTNESS" >/sys/class/leds/LED0_Green/brightness
-    echo "$BLUE_BRIGHTNESS" >/sys/class/leds/LED0_Blue/brightness
+	if [ "$GREEN_BRIGHTNESS" != "$LAST_GREEN_BRIGHTNESS" ]; then
+		echo "$GREEN_BRIGHTNESS" > "/sys/class/leds/LED0_Green/brightness"
+		LAST_GREEN_BRIGHTNESS="$GREEN_BRIGHTNESS"
+	fi
+	
+	if [ "$BLUE_BRIGHTNESS" != "$LAST_BLUE_BRIGHTNESS" ]; then
+		echo "$BLUE_BRIGHTNESS" > "/sys/class/leds/LED0_Blue/brightness"
+		LAST_BLUE_BRIGHTNESS="$BLUE_BRIGHTNESS"
+	fi
+
+		
 
     RED_LAST_CHANGE_TIME=$((RED_LAST_CHANGE_TIME + diff))
     if [ $RR -ge 1 ]; then
